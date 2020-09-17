@@ -24,5 +24,6 @@ for item in gender:
         gender[counter] = 1
     counter += 1
 
+plt.figure(figsize=(10, 100))
 plt.scatter(gender, age, c=gender, cmap='RdBu')
 plt.show()
