@@ -14,6 +14,16 @@ def dist(x1, y1, x2, y2):
     return np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
+def calculateCluster(clusters, i, x, y):
+    isUpdate = False
+    for j in range(0, n):
+        if dist(x[i], y[i], x[j], y[j]) < eps:
+            if clusters[j] == 0:
+                clusters[j] = clusters[i]
+                isUpdate = True
+    return isUpdate
+
+
 n = 100
 x = np.random.randint(1, 100, n)
 y = np.random.randint(1, 100, n)
@@ -43,15 +53,16 @@ for i in range(0, n):
         if clusters[i] == 0:
             clusters[i] = cl
             cl += 1
-        for j in range(0, n):
-            if dist(x[i], y[i], x[j], y[j]) < eps:
-                clusters[j] = clusters[i]
+        flag = True
+        while flag:
+            flag = calculateCluster(clusters, i, x, y)
 
 for i in range(0, n):
     if flags[i] == Flag.YELLOW.value:
         minDist = 9999999999999
         for j in range(0, n):
-            if flags[j] == Flag.GREEN.value and dist(x[i], y[i], x[j], y[j]) < eps and dist(x[i], y[i], x[j], y[j]) < minDist:
+            if flags[j] == Flag.GREEN.value and dist(x[i], y[i], x[j], y[j]) < eps and dist(x[i], y[i], x[j],
+                                                                                            y[j]) < minDist:
                 minDist = dist(x[i], y[i], x[j], y[j])
                 clusters[i] = clusters[j]
 
