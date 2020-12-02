@@ -1,0 +1,34 @@
+from sklearn.cluster import KMeans
+from sklearn.svm import SVC
+import numpy as np
+import plotly.graph_objects as go
+
+count = 70
+points = []
+
+x = np.random.randint(0, 100, count)
+y = np.random.randint(0, 100, count)
+z = np.random.randint(0, 100, count)
+
+for i in range(count):
+    points.append([x[i], y[i], z[i]])
+
+clusters = KMeans(n_clusters=2, random_state=0).fit(points).labels_
+
+colors = ['red'] * count
+
+for i in range(count):
+    if clusters[i] == 1:
+        colors[i] = 'blue'
+
+svc = SVC(kernel='linear')
+svc.fit(points[:count], clusters)
+
+zz = lambda x, y: (-svc.intercept_[0] - svc.coef_[0][0] * x - svc.coef_[0][1] * y) / svc.coef_[0][2]
+temp = np.linspace(0, 100, 50)
+xx, yx = np.meshgrid(temp, temp)
+
+fig = go.Figure()
+fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode='markers', marker=dict(color=colors)))
+fig.add_trace(go.Surface(x=xx, y=yx, z=zz(xx, yx)))
+fig.show()
