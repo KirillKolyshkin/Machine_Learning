@@ -80,7 +80,6 @@ def anotherGeneration():
 # параметры конфигурации
 sum = 30
 generationSize = 5  # кол-во порождаемых элементов
-generationCount = 10000  # кол-во поколений
 mutationChance = 10  # в процентах
 parameters = [1, 2, 3, 4]
 # parameters задает кол-во и числа у аргументов
