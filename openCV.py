@@ -33,3 +33,7 @@ for file in os.listdir(base_dir + 'images'):
             if confidence > 0.8:
                 frame = image[startY:endY, startX:endX]
                 cv2.imwrite(base_dir + 'faces/' + str(i) + '_' + file, frame)
+               
+# link for two files for model:
+# https://github.com/opencv/opencv/blob/master/samples/dnn/face_detector/deploy.prototxt
+# https://github.com/nhatthai/opencv-face-recognition/blob/master/src/face_detection_model/weights.caffemodel
